@@ -54,26 +54,21 @@ lib.mat_mult.argtypes = [
 lib.mat_mult.restype = ctypes.POINTER(ctypes.c_double)  # No return value (void)
 
 lib.trapezoidal_rule.argtypes = [
+    ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double),
     ctypes.c_double,
     ctypes.c_double,
     ctypes.c_int,
-    ctypes.c_double,
-    ctypes.c_double,
-    ctypes.c_double,
 ]
-
 lib.trapezoidal_rule.restype = ctypes.c_double
 
 lib.simpsons_rule.argtypes = [
+    ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double),
     ctypes.c_double,
     ctypes.c_double,
     ctypes.c_int,
-    ctypes.c_double,
-    ctypes.c_double,
-    ctypes.c_double,
 ]
-
 lib.simpsons_rule.restype = ctypes.c_double
+
 
 lib.test_integrate.argtypes = []
 lib.test_integrate.restype = None
@@ -188,4 +183,18 @@ class cmath:
 class cintegrate:
 
     def test_integrate():
+        # test the integrate functions pure c.
         lib.test_integrate()
+
+    def trapezoidal_rule(f, a, b, n):
+        # Convert the Python function to a C function pointer
+        f = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double)(f)
+
+        # Call the C function using ctypes
+        return lib.trapezoidal_rule(f, a, b, n)
+
+    def simpsons_rule(f, a, b, n):
+        # Convert the Python function to a C function pointer
+        f = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double)(f)
+        # Call the C function using ctypes
+        return lib.simpsons_rule(f, a, b, n)

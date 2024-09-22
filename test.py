@@ -92,3 +92,14 @@ print("All  operations are correct")
 from pyclib import cintegrate
 
 cintegrate.test_integrate()
+
+
+def f(x):
+    return x * x + 10
+
+
+trap_result_c = cintegrate.trapezoidal_rule(f, 0, 1, 1000)
+simp_result_c = cintegrate.simpsons_rule(f, 0, 1, 1000)
+
+print(f"Trapezoidal rule result: {trap_result_c}")
+print(f"Simpson's rule result: {simp_result_c}")
