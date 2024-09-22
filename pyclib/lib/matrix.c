@@ -23,7 +23,14 @@ EXPORT double vector_length(double *a, int n) {
 // Matrix multiplication function
 // A[m x n] * B[n x p] = C[m x p]
 // Assumes that A, B, and C are flat 1D arrays stored in row-major order.
-void mat_mult(double *A, double *B, double *C, int m, int n, int p) {
+double *mat_mult(double *A, double *B, int m, int n, int p) {
+    // Allocate memory for matrix C
+    double *C = (double *)malloc(m * p * sizeof(double));
+    if (C == NULL) {
+        // Handle memory allocation failure
+        return NULL;
+    }
+
     // Initialize matrix C to zero
     for (int i = 0; i < m * p; i++) {
         C[i] = 0.0;
@@ -37,5 +44,10 @@ void mat_mult(double *A, double *B, double *C, int m, int n, int p) {
             }
         }
     }
+
+    return C;  // Return the pointer to the allocated matrix C
 }
 
+void free_memory(double *ptr) {
+    free(ptr);
+}

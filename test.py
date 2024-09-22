@@ -76,6 +76,7 @@ t1 = time()
 print(f"Matrix multiplication result is: {matrix_multiply_result}")
 print(f"Time taken to perform the operation Python: {t1 - t0} seconds")
 
+# Assert the results
 
 assert sum_result == sum_result_c
 assert diff_result == diff_result_c
@@ -85,3 +86,9 @@ assert dot_product_result == dot_product_result_c
 assert vector_length_result == vector_length_result_c
 assert matrix_multiply_result.all() == matrix_multiply_result_c.all()
 print("All  operations are correct")
+
+# Test integrate
+
+from pyclib import cintegrate
+
+cintegrate.test_integrate()

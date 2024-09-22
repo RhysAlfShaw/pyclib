@@ -46,13 +46,41 @@ lib.vector_length.restype = ctypes.c_double
 lib.mat_mult.argtypes = [
     ctypes.POINTER(ctypes.c_double),  # A
     ctypes.POINTER(ctypes.c_double),  # B
-    ctypes.POINTER(ctypes.c_double),  # C
     ctypes.c_int,  # m (rows of A)
     ctypes.c_int,  # n (columns of A / rows of B)
     ctypes.c_int,  # p (columns of B)
 ]
 
-lib.mat_mult.restype = None  # No return value (void)
+lib.mat_mult.restype = ctypes.POINTER(ctypes.c_double)  # No return value (void)
+
+lib.trapezoidal_rule.argtypes = [
+    ctypes.c_double,
+    ctypes.c_double,
+    ctypes.c_int,
+    ctypes.c_double,
+    ctypes.c_double,
+    ctypes.c_double,
+]
+
+lib.trapezoidal_rule.restype = ctypes.c_double
+
+lib.simpsons_rule.argtypes = [
+    ctypes.c_double,
+    ctypes.c_double,
+    ctypes.c_int,
+    ctypes.c_double,
+    ctypes.c_double,
+    ctypes.c_double,
+]
+
+lib.simpsons_rule.restype = ctypes.c_double
+
+lib.test_integrate.argtypes = []
+lib.test_integrate.restype = None
+
+# free the memory allocated by the C function
+lib.free_memory.argtypes = [ctypes.POINTER(ctypes.c_double)]
+lib.free_memory.restype = None
 
 
 class cmath:
@@ -141,13 +169,23 @@ class cmath:
         b = np.ascontiguousarray(b, dtype=np.float64)
         c = np.zeros((m, q), dtype=np.float64)
         # Call the C function using ctypes
-        lib.mat_mult(
+        c_ptr = lib.mat_mult(
             a.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
             b.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
-            c.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
             ctypes.c_int(m),
             ctypes.c_int(n),
             ctypes.c_int(p),
         )
+        if c_ptr is not None:
 
-        return c
+            C = np.ctypeslib.as_array(c_ptr, shape=(m, q))
+            lib.free_memory(c_ptr)
+            return C
+        else:
+            return None
+
+
+class cintegrate:
+
+    def test_integrate():
+        lib.test_integrate()

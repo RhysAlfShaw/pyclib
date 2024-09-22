@@ -14,6 +14,9 @@ EXPORT double dot_product(double *a, double *b, int n);
 EXPORT double vector_length(double *a, int n);
 
 // matrix multiplication
-EXPORT void mat_mult(double *A, double *B, double *C, int m, int n, int p);
+EXPORT double *mat_mult(double *A, double *B, int m, int n, int p);
+
+// free memory
+EXPORT void free_memory(double *ptr);
 
 #endif // MATRIX_H
