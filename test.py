@@ -94,8 +94,11 @@ from pyclib import cintegrate
 cintegrate.test_integrate()
 
 
+from math import sin
+
+
 def f(x):
-    return x * x + 10
+    return x * x + 10 + sin(x) + x * x * x
 
 
 trap_result_c = cintegrate.trapezoidal_rule(f, 0, 1, 1000)
