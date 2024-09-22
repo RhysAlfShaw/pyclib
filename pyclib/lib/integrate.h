@@ -13,6 +13,6 @@ EXPORT double trapezoidal_rule(double (*f)(double), double a, double b, int n);
 // Function to integrate a function f(x) using Simpson's rule
 EXPORT double simpsons_rule(double (*f)(double), double a, double b, int n);
 
-EXPORT int test_integrate();
+EXPORT int test_integrate(int n);
 
 #endif // INTEGRATE_H

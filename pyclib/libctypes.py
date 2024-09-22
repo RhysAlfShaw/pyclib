@@ -69,7 +69,7 @@ lib.simpsons_rule.argtypes = [
 lib.simpsons_rule.restype = ctypes.c_double
 
 
-lib.test_integrate.argtypes = []
+lib.test_integrate.argtypes = [ctypes.c_int]
 lib.test_integrate.restype = None
 
 # free the memory allocated by the C function

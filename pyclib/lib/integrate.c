@@ -9,16 +9,15 @@ double example_function(double x) {
     return x * x; // f(x) = x^2
 }
 
-int test_integrate() {
+int test_integrate(int n) {
     double a = 0.0;
     double b = 1.0;
-    int n = 1000;
 
     double result_trapezoidal = trapezoidal_rule(example_function, a, b, n);
     double result_simpsons = simpsons_rule(example_function, a, b, n);
 
-    printf("Trapezoidal Rule: %f\n", result_trapezoidal);
-    printf("Simpson's Rule: %f\n", result_simpsons);
+    // printf("Trapezoidal Rule: %f\n", result_trapezoidal);
+    // printf("Simpson's Rule: %f\n", result_simpsons);
 
     return 0;
 }

@@ -4,9 +4,9 @@ import ctypes
 
 class cintegrate:
 
-    def test_integrate():
+    def test_integrate(n):
         # test the integrate functions pure c.
-        lib.test_integrate()
+        lib.test_integrate(ctypes.c_int(n))
 
     def trapezoidal_rule(f, a, b, n):
         # Convert the Python function to a C function pointer
